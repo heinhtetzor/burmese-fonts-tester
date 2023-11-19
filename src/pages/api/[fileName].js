@@ -1,5 +1,3 @@
-const fs = require('fs');
-const path = require('path');
 import getAllFonts from '@/helper/getAllFonts';
 import generateCssFontFaces from '@/helper/generateCssFontFaces';
 
