@@ -1,12 +1,12 @@
 import DeliveryModal from '@/components/DeliveryModal';
 import NextMoveLogo from '@/components/NextMoveLogo';
-import Toggle from '@/components/Toggle';
+import DarkModeToggle from '@/components/DarkModeToggle';
 import getAllFonts from '@/helper/getAllFonts';
 import { useState } from "react";
 
 const Home = ({fonts}) => {
 
-	const [selectedFont, setSelectedFont] = useState(fonts[0]);
+	const [selectedFont, setSelectedFont] = useState(fonts.unicodes[0]);
 	const [isBold, setIsBold] = useState(false);
 	const [isItalic, setIsItalic] = useState(false);
 	const [isLineThrough, setIsLineThrough] = useState(false);
@@ -14,6 +14,8 @@ const Home = ({fonts}) => {
 	const [showModal, setShowModal] = useState(false);
 	const [isDarkMode, setIsDarkMode] = useState(false);
 
+	const defaultText = `သီဟိုဠ်မှ ဉာဏ်ကြီးရှင်သည် အာယုဝဍ္ဎနဆေးညွှန်းစာကို ဇလွန်ဈေးဘေး ဗာဒံပင်ထက် အဓိဋ္ဌာန်လျက် ဂဃနဏဖတ်ခဲ့သည်။`;
+	
     return (
 		<div className={ isDarkMode ? 'dark' : '' }>
 			<div className="flex flex-col h-screen w-screen dark:bg-zinc-700">
@@ -26,13 +28,11 @@ const Home = ({fonts}) => {
 							Burmese Fonts Tester
 						</span>
 					</div>
-					<div className="flex flex-1 justify-end">
-						<div className="mr-3">
-							<Toggle
-								value={isDarkMode}
-								onChange={() => setIsDarkMode( prev => !prev )}
-							/>
-						</div>
+					<div className="flex flex-1 justify-center">
+						<DarkModeToggle
+							value={isDarkMode}
+							onChange={() => setIsDarkMode( prev => !prev )}
+						/>
 					</div>
 				</div>
 
@@ -48,16 +48,46 @@ const Home = ({fonts}) => {
 						</div>
 
 						{/* desktop font list scroll */}
-						<div className="flex-1 overflow-auto bg-gray-100 dark:bg-zinc-800">
-							{ fonts.map( (font, index) => 
-								<div 
-									key={index} 
-									className={`flex items-center justify-center h-14 mx-3 my-2 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-200' : ''}`}
-									onClick={ () => setSelectedFont(font) }
-								>
-									<span className={`text-sm font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
-										{font.displayName}
-									</span>
+						<div className="flex-1 overflow-auto dark:bg-zinc-800">
+
+							{ (fonts.unicodes.length !== 0) && (
+								<div>
+									<div className="flex items-center justify-center bg-gray-200 dark:bg-zinc-700 sticky top-0 h-8">
+										<span className="text-xs font-thin dark:text-white">Unicodes</span>
+									</div>
+									<div className="space-y-2 px-3 py-2">
+										{ fonts.unicodes.map( (font, index) => 
+											<div 
+												key={index} 
+												className={`flex items-center justify-center h-14 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-100' : ''}`}
+												onClick={ () => setSelectedFont(font) }
+											>
+												<span className={`text-sm font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
+													{font.displayName}
+												</span>
+											</div>
+										)}
+									</div>
+								</div>
+							)}
+							{ (fonts.nonUnicodes.length !== 0) && (
+								<div>
+									<div className="flex items-center justify-center bg-gray-200 dark:bg-zinc-700 sticky top-0 h-8">
+										<span className="text-xs font-thin dark:text-white">Non-Unicodes</span>
+									</div>
+									<div className="space-y-2 px-3 py-2">
+										{ fonts.nonUnicodes.map( (font, index) => 
+											<div 
+												key={index} 
+												className={`flex items-center justify-center h-14 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-100' : ''}`}
+												onClick={ () => setSelectedFont(font) }
+											>
+												<span className={`text-sm font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
+													{font.displayName}
+												</span>
+											</div>
+										)}
+									</div>
 								</div>
 							)}
 						</div>
@@ -124,20 +154,49 @@ const Home = ({fonts}) => {
 						</div>
 
 						{/* mobile font list scroll */}
-						<div className="flex overflow-x-auto sm:hidden bg-gray-100 dark:bg-zinc-800">
-							<div className="flex flex-row">
-								{ fonts.map( (font, index) => 
-									<div 
-										key={index} 
-										className={`flex items-center justify-center w-24 m-2 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-200' : ''}`}
-										onClick={ () => setSelectedFont(font) }
-									>
-										<span className={`text-xs m-1 font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
-											{font.displayName}
+						<div className="flex overflow-x-auto sm:hidden bg-gray-200 dark:bg-zinc-800">
+							{ (fonts.unicodes.length !== 0) && (
+								<div className="flex flex-row">
+									<div className="flex items-center bg-white rounded-lg mx-1 my-2 sticky left-0 dark:bg-zinc-700 shadow">
+										<span className="font-thin text-center text-xs mx-2 dark:text-white">
+											Unicodes
 										</span>
 									</div>
-								)}
-							</div>
+									{ fonts.unicodes.map( (font, index) => 
+										<div 
+											key={index} 
+											className={`flex items-center justify-center w-24 mx-1 my-2 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-200' : ''}`}
+											onClick={ () => setSelectedFont(font) }
+										>
+											<span className={`text-xs m-1 font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
+												{font.displayName}
+											</span>
+										</div>
+									)}
+								</div>
+							)}
+							{ (fonts.nonUnicodes.length !== 0) && (
+								<div className="flex flex-row">
+									<div className="flex items-center bg-white rounded-lg mx-1 my-2 sticky left-0 dark:bg-zinc-700 shadow">
+										<span className="font-thin text-center text-xs mx-1 dark:text-white">
+											Non
+											Unicodes
+										</span>
+									</div>
+
+									{ fonts.nonUnicodes.map( (font, index) => 
+										<div 
+											key={index} 
+											className={`flex items-center justify-center w-24 mx-1 my-2 cursor-pointer rounded-xl ${ font.fileName === selectedFont.fileName ? 'bg-sky-200' : ''}`}
+											onClick={ () => setSelectedFont(font) }
+										>
+											<span className={`text-xs m-1 font-semibold text-center ${ font.fileName === selectedFont.fileName ? 'text-black' : 'text-gray-500 dark:text-white'}`}>
+												{font.displayName}
+											</span>
+										</div>
+									)}
+								</div>
+							)}
 						</div>
 
 						<textarea
@@ -149,7 +208,7 @@ const Home = ({fonts}) => {
 								fontStyle: isItalic ? 'italic' : '',
 								textDecorationLine: isLineThrough ? 'line-through' : ''
 							}}
-							defaultValue="သီဟိုဠ်မှ ဉာဏ်ကြီးရှင်သည် အာယုဝဍ္ဎနဆေးညွှန်းစာကို ဇလွန်ဈေးဘေး ဗာဒံပင်ထက် အဓိဋ္ဌာန်လျက် ဂဃနဏဖတ်ခဲ့သည်။"
+							defaultValue={defaultText}
 							placeholder="Type something..."
 						/>
 					</div>
@@ -157,8 +216,8 @@ const Home = ({fonts}) => {
 
 				<div className="flex items-center justify-end border-t border-t-gray-200 dark:border-t-zinc-800 h-8">
 					<div className="flex flex-row items-center space-x-2 mr-4">
-						<span className="text-2xs italic text-gray-400 dark:text-white">Brought To You By</span>
-						<NextMoveLogo theme="light"/>
+						<span className="text-2xs italic text-gray-400">Brought To You By</span>
+						<NextMoveLogo theme={ isDarkMode ? 'light' : 'dark' }/>
 					</div>
 				</div>
 
@@ -187,15 +246,21 @@ export async function getStaticProps() {
 
 	const allFonts = getAllFonts();
 
-	const fonts = allFonts.map( font => {
+	const mixedFonts = allFonts.map( font => {
 		return {
 			displayName: snakeCaseToReadableCase(font.fileName),
 			...font
 		}
-	})
+	});
+
+	const fonts = {
+		unicodes: mixedFonts.filter( e => e.unicode ),
+		nonUnicodes: mixedFonts.filter( e => !e.unicode )
+	}
+
 	return {
 		props: {
-			fonts: fonts,
+			fonts
 		},
 	};
 }

@@ -4,10 +4,14 @@ const path = require('path');
 export default function handler(req, res) {
     
     const fileName = req.query.fileName;
-    const filePath = path.join(process.cwd(), `public/fonts/${fileName}`);
+    
+    const unicodesPath = path.join(process.cwd(), 'public/fonts/unicodes', fileName);
+    const nonUnicodesPath = path.join(process.cwd(), 'public/fonts/non_unicodes', fileName);
+
+    const filePath = fs.existsSync(unicodesPath) ? unicodesPath : nonUnicodesPath;
 
     if (!fs.existsSync(filePath)) {
-		return res.status(404).json({ error: "Resource not found" });
+		  return res.status(404).json({ error: "Resource not found" });
     }
 
     const fontFile = fs.readFileSync(filePath);

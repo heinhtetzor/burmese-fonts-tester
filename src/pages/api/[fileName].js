@@ -3,6 +3,7 @@ import generateCssFontFaces from '@/helper/generateCssFontFaces';
 
 export default (req, res) => {
 
+	//remove extension
 	const fileName = req.query.fileName.replace(/\.[^/.]+$/, '');;
 	const allFonts = getAllFonts();
 

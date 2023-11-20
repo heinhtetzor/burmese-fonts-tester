@@ -44,7 +44,7 @@ const DeliveryModal = ({
             }}
         >
             {/* card */}
-            <div className={`flex flex-col w-96 rounded-lg border border-gray-500 bg-white p-4 shadow-xl transition-all duration-300 dark:bg-zinc-600 ${ show ? 'rotate-0' : '-rotate-45' }`}>
+            <div className={`flex flex-col w-96 rounded-lg border border-gray-500 bg-white p-4 shadow-xl transition-all duration-300 dark:bg-zinc-600 ${ show ? 'rotate-0 opacity-1' : '-rotate-90 opacity-0' }`}>
 
                 <div className="flex flex-row items-center justify-end">
                     <button 
