@@ -2,10 +2,10 @@ import DeliveryModal from '@/components/DeliveryModal';
 import NextMoveLogo from '@/components/NextMoveLogo';
 import DarkModeToggle from '@/components/DarkModeToggle';
 import getAllFonts from '@/helper/getAllFonts';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const Home = ({fonts}) => {
-
+const Home = ({fonts, ...props}) => {
+	
 	const [selectedFont, setSelectedFont] = useState(fonts.unicodes[0]);
 	const [isBold, setIsBold] = useState(false);
 	const [isItalic, setIsItalic] = useState(false);
@@ -16,23 +16,30 @@ const Home = ({fonts}) => {
 
 	const defaultText = `သီဟိုဠ်မှ ဉာဏ်ကြီးရှင်သည် အာယုဝဍ္ဎနဆေးညွှန်းစာကို ဇလွန်ဈေးဘေး ဗာဒံပင်ထက် အဓိဋ္ဌာန်လျက် ဂဃနဏဖတ်ခဲ့သည်။`;
 	
+	useEffect(() => {
+		document.body.className = isDarkMode ? 'bg-zinc-700' : 'bg-white';
+	}, [isDarkMode]); 
+	  
     return (
 		<div className={ isDarkMode ? 'dark' : '' }>
+
 			<div className="flex flex-col h-screen w-screen dark:bg-zinc-700">
 
 				{/* title bar */}
 				<div className="flex flex-row justify-between items-center h-12 border-b border-b-gray-200 dark:border-b-gray-800">
-					<div className="flex-1"></div>
-					<div className="flex-1 flex justify-center">
-						<span className="font-serif font-bold italic text-lg dark:text-white">
+					<div className="sm:flex-1"></div>
+					<div className="flex-1 flex sm:justify-center">
+						<span className="font-serif ml-5 font-bold italic text-lg dark:text-white">
 							Burmese Fonts Tester
 						</span>
 					</div>
-					<div className="flex flex-1 justify-center">
-						<DarkModeToggle
-							value={isDarkMode}
-							onChange={() => setIsDarkMode( prev => !prev )}
-						/>
+					<div className="flex sm:flex-1 justify-center">
+						<div className="mr-5">
+							<DarkModeToggle
+								value={isDarkMode}
+								onChange={() => setIsDarkMode( prev => !prev )}
+							/>
+						</div>
 					</div>
 				</div>
 
@@ -198,6 +205,14 @@ const Home = ({fonts}) => {
 								</div>
 							)}
 						</div>
+
+						{ !selectedFont.unicode && (
+							<div className="flex justify-center mt-3">
+								<span className="text-xs text-yellow-500">
+									Warning! Rewrite with English Keyboard to see changes for non-unicode fonts
+								</span>
+							</div>
+						)}
 
 						<textarea
 							className="flex-1 focus:outline-none placeholder:font-sans text-black w-full h-full resize-none p-8 dark:bg-zinc-700 dark:text-white"
