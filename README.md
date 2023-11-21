@@ -1,3 +1,3 @@
 ## Deployed on Vercel
 
-[https://burmesefontstester.vercel.app](https://burmesefontstester.vercel.app)
+[https://burmesefonts.vercel.app](https://burmesefonts.vercel.app)
