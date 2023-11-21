@@ -30,11 +30,11 @@ const DeliveryModal = ({
     selectedFont 
 }) => {
 
-    const cssSelectedLink = `@import url(http://localhost:3000/api/${selectedFont.fileName}.css);`;
-    const cssAllLink = `@import url(http://localhost:3000/api/all.css);`;
-    const htmlSelectedLink = `<link rel="stylesheet" href="http://localhost:3000/api/${selectedFont.fileName}.css"></link>`;
-    const htmlAllLink = `<link rel="stylesheet" href="http://localhost:3000/api/all.css"></link>`;
-    const downloadLink = `http://localhost:3000/api/fonts/${selectedFont.fileName}.${selectedFont.extension}`;
+    const cssSelectedLink = `@import url(https://burmesefontstester.vercel.app/api/${selectedFont.fileName}.css);`;
+    const cssAllLink = `@import url(https://burmesefontstester.vercel.app/api/all.css);`;
+    const htmlSelectedLink = `<link rel="stylesheet" href="https://burmesefontstester.vercel.app/api/${selectedFont.fileName}.css"></link>`;
+    const htmlAllLink = `<link rel="stylesheet" href="https://burmesefontstester.vercel.app/api/all.css"></link>`;
+    const downloadLink = `https://burmesefontstester.vercel.app/api/fonts/${selectedFont.fileName}.${selectedFont.extension}`;
 
     return (
         <div 
